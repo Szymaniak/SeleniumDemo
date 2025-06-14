@@ -8,8 +8,9 @@ import unittest
 class SeleniumDemoLoginTest(unittest.TestCase):
     def setUp(self):
         options = Options()
+        options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=options)
-        self.driver.get("http://seleniumdemo.com")
+        self.driver.get("http://seleniumdemo.com/?page_id=7")
         self.driver.maximize_window()
 
     def test_login_button_present(self):
@@ -18,11 +19,6 @@ class SeleniumDemoLoginTest(unittest.TestCase):
 
         driver = self.driver
 
-        # Click on 'My Account' from the menu
-        my_account = WebDriverWait(driver, 10).until(
-            EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/header/div[1]/div/div/div[1]/nav/div/ul/li[3]/a"))
-        )
-        my_account.click()
 
         # Find and fill username and password fields
         driver.find_element(By.ID, "username").send_keys("34t43rfwe4t3rfewf4w@test.com")
