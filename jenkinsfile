@@ -1,10 +1,19 @@
 pipeline {
     agent any
 
+    triggers {
+        cron('H/2 * * * *')
+    }
+
+    parameters {
+        string(name: 'MESSAGE', defaultValue: 'Hello World',
+        description: 'Message to be displayed')
+    }
+
     stages {
         stage('Say Hello World'){
             steps {
-                echo 'Hello World'
+                echo "Message: ${params.MESSAGE}"
             }
         }
     }
