@@ -5,10 +5,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import unittest
 
+
+
 class SeleniumDemoLoginTest(unittest.TestCase):
     def setUp(self):
         options = Options()
-        options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=options)
         self.driver.get("http://seleniumdemo.com/?page_id=7")
         self.driver.maximize_window()
@@ -45,6 +46,7 @@ class SeleniumDemoLoginTest(unittest.TestCase):
         self.assertEqual(greeting.text.strip(), expected_text, "Greeting text does not match expected.")
 
         print("Koniec")
+
 
     def tearDown(self):
         self.driver.quit()
