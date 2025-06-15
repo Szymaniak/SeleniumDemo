@@ -61,7 +61,8 @@ class SeleniumDemoLoginTest(unittest.TestCase):
         )
 
         # Expected greeting message
-        expected_text = "Hello "+email+" (not "+email+"? Log out)"
+        trimmed_email = email.split("@")[0]
+        expected_text = "Hello "+trimmed_email+" (not "+trimmed_email+"? Log out)"
 
         # Assert the greeting text matches
         self.assertEqual(greeting.text.strip(), expected_text, "Greeting text does not match expected.")
