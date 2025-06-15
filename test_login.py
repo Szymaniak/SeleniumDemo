@@ -57,7 +57,7 @@ class SeleniumDemoLoginTest(unittest.TestCase):
         # Wait for greeting element after login
         greeting = WebDriverWait(driver, 10).until(
             EC.presence_of_element_located(
-                (By.XPATH, "/html/body/div[1]/div/div[2]/div/div/article/div/section/div/div/div/p[1]"))
+                (By.XPATH, "//p[contains(text(), 'Hello')]"))
         )
 
         # Expected greeting message
