@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import unittest
+import os
 
 
 
@@ -14,7 +15,27 @@ class SeleniumDemoLoginTest(unittest.TestCase):
         self.driver.get("http://seleniumdemo.com/?page_id=7")
         self.driver.maximize_window()
 
-    def test_login_button_present(self):
+    def test_01_registration(self):
+        email = os.environ.get("EMAIL")
+        password = os.environ.get("PASS")
+
+
+        driver = self.driver
+
+        # Find and fill username and password fields
+        driver.find_element(By.ID, "reg_email").send_keys(email)
+        driver.find_element(By.ID, "reg_password").send_keys(password)
+
+        registration_button = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.NAME, "register"))
+        )
+
+        # Click log in button
+        registration_button.click()
+
+    def test_02_login_button_present(self):
+        email = os.environ.get("EMAIL")
+        password = os.environ.get("PASS")
 
         print("Początek")
 
@@ -22,8 +43,8 @@ class SeleniumDemoLoginTest(unittest.TestCase):
 
 
         # Find and fill username and password fields
-        driver.find_element(By.ID, "username").send_keys("34t43rfwe4t3rfewf4w@test.com")
-        driver.find_element(By.ID, "password").send_keys("34t43rfwe4t3rfewf4w")
+        driver.find_element(By.ID, "username").send_keys(email)
+        driver.find_element(By.ID, "password").send_keys(password)
 
         # Wait for the login button to appear
         login_button = WebDriverWait(driver, 10).until(
@@ -40,7 +61,7 @@ class SeleniumDemoLoginTest(unittest.TestCase):
         )
 
         # Expected greeting message
-        expected_text = "Hello 34t43rfwe4t3rfewf4w (not 34t43rfwe4t3rfewf4w? Log out)"
+        expected_text = "Hello "+email+" (not "+email+"? Log out)"
 
         # Assert the greeting text matches
         self.assertEqual(greeting.text.strip(), expected_text, "Greeting text does not match expected.")
