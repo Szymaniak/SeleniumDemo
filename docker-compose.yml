@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  selenium:
+    image: selenium/standalone-chrome:115.0
+    shm_size: 2g
+    ports:
+      - "4444:4444"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/status"]
+      interval : 5s
+      retries: 5
+
+  tests:
+    build: .
+    depends_on:
+      selenium:
+        condition: service_healthy
+    environment:
+      - EMAIL=malibu@test.com
+      - PASS=1q2w3e4r^Y&U*I(O
+    command: pytest

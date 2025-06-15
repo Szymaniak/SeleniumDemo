@@ -1,7 +1,9 @@
 pipeline {
     agent any
 
-
+    triggers {
+        cron('H/2 * * * *')
+    }
 
     parameters {
         string(name: 'MESSAGE', defaultValue: 'Hello World',

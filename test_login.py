@@ -11,22 +11,30 @@ import os
 class SeleniumDemoLoginTest(unittest.TestCase):
     def setUp(self):
         options = Options()
-        self.driver = webdriver.Chrome(options=options)
-        self.driver.get("http://seleniumdemo.com/?page_id=7")
-        self.driver.maximize_window()
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+
+        self.driver = webdriver.Remote(
+            command_executor='http://selenium:4444/wd/hub',
+            options=options
+
+        )
+
 
     def test_01_registration(self):
+
+
         email = os.environ.get("EMAIL")
         password = os.environ.get("PASS")
 
 
-        driver = self.driver
+
 
         # Find and fill username and password fields
-        driver.find_element(By.ID, "reg_email").send_keys(email)
-        driver.find_element(By.ID, "reg_password").send_keys(password)
+        self.driver.find_element(By.ID, "reg_email").send_keys(email)
+        self.driver.find_element(By.ID, "reg_password").send_keys(password)
 
-        registration_button = WebDriverWait(driver, 10).until(
+        registration_button = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.NAME, "register"))
         )
 
@@ -39,15 +47,17 @@ class SeleniumDemoLoginTest(unittest.TestCase):
 
         print("Początek")
 
-        driver = self.driver
+
+
+       # driver = self.driver
 
 
         # Find and fill username and password fields
-        driver.find_element(By.ID, "username").send_keys(email)
-        driver.find_element(By.ID, "password").send_keys(password)
+        self.driver.find_element(By.ID, "username").send_keys(email)
+        self.driver.find_element(By.ID, "password").send_keys(password)
 
         # Wait for the login button to appear
-        login_button = WebDriverWait(driver, 10).until(
+        login_button = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, "/html/body/div[1]/div/div[2]/div/div/article/div/section/div/div/div[2]/div[1]/form/p[3]/button"))
         )
 
@@ -55,7 +65,7 @@ class SeleniumDemoLoginTest(unittest.TestCase):
         login_button.click()
 
         # Wait for greeting element after login
-        greeting = WebDriverWait(driver, 10).until(
+        greeting = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located(
                 (By.XPATH, "//p[contains(text(), 'Hello')]"))
         )
