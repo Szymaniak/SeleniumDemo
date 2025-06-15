@@ -11,7 +11,6 @@ import os
 class SeleniumDemoLoginTest(unittest.TestCase):
     def setUp(self):
         options = Options()
-        options.add_argument("--headless")
         self.driver = webdriver.Chrome(options=options)
         self.driver.get("http://seleniumdemo.com/?page_id=7")
         self.driver.maximize_window()
